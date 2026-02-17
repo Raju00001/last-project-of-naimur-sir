@@ -1186,6 +1186,7 @@
             { id: 'python', name: 'Python Basics', cost: 5, color: '#3776AB', colorDark: '#14334D', desc: 'Versatile language for web and data science.' }
         ];
 
+        // ADDED 5 QUIZZES TO EVERY HTML MODULE
         const HTML_MODULES = [
             { id: 'html-m1', title: 'Introduction to HTML', video: 'https://www.youtube.com/embed/F9lLXQXI1yA', content: "HTML stands for Hyper Text Markup Language. It is the standard markup language for creating Web pages. In this module, we will explore the basic structure of an HTML document, including the DOCTYPE, head, and body tags.", quiz: [
                 { q: "What does HTML stand for?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyperlink Text Mode", "Home Tool Markup Language"], ans: 0 },
@@ -1466,7 +1467,14 @@
             q.options.forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.innerHTML = `<span class="option-letter">${LETTERS[i]}</span>${opt}`;
+                
+                // FIX: Use createTextNode for option text so HTML tags (<h1>, <br>) display as text instead of rendering
+                const letterSpan = document.createElement('span');
+                letterSpan.className = 'option-letter';
+                letterSpan.textContent = LETTERS[i];
+                btn.appendChild(letterSpan);
+                btn.appendChild(document.createTextNode(opt));
+
                 btn.onclick = () => selectOption(i, btn);
                 list.appendChild(btn);
             });
